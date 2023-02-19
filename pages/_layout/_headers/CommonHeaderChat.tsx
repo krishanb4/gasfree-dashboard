@@ -34,15 +34,17 @@ const CommonHeaderChat = () => {
 			connector: new MetaMaskConnector(),
 		});
 
-		const { message } = await requestChallengeAsync({
+		const challenge = await requestChallengeAsync({
 			address: account,
 			chainId: chain.id,
 		});
 
+		const message = challenge?.message || '';
+
 		const signature = await signMessageAsync({ message });
 
 		// redirect user after success authentication to '/user' page
-		const { url } = await signIn('moralis-auth', {
+		const response = await signIn('moralis-auth', {
 			message,
 			signature,
 			redirect: false,
@@ -52,7 +54,7 @@ const CommonHeaderChat = () => {
 		 * instead of using signIn(..., redirect: "/user")
 		 * we get the url from callback and push it to the router to avoid page refreshing
 		 */
-		push(url);
+		push(response?.url || '/');
 	};
 
 	useEffect(() => {
@@ -86,10 +88,8 @@ const CommonHeaderChat = () => {
 	return (
 		<>
 			<div className='col d-flex align-items-center cursor-pointer'>
-
 				{isConnected ? (
 					<button className='btn btn-lg btn-dark'>{address}</button>
-
 				) : (
 					<button className='btn btn-lg btn-dark' onClick={handleAuth}>
 						Connect
