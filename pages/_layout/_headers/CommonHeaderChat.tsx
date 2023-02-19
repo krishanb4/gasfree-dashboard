@@ -86,8 +86,10 @@ const CommonHeaderChat = () => {
 	return (
 		<>
 			<div className='col d-flex align-items-center cursor-pointer'>
+
 				{isConnected ? (
 					<button className='btn btn-lg btn-dark'>{address}</button>
+
 				) : (
 					<button className='btn btn-lg btn-dark' onClick={handleAuth}>
 						Connect

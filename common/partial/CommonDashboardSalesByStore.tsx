@@ -376,7 +376,7 @@ const CommonDashboardSalesByStore = () => {
 			<CardHeader>
 				<CardLabel icon='ReceiptLong'>
 					<CardTitle tag='h4' className='h5'>
-						Sales by Stores
+						Gas Usage by Time
 					</CardTitle>
 					<CardSubTitle tag='h5' className='h6'>
 						Reports

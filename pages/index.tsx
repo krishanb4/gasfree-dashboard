@@ -21,7 +21,8 @@ import CommonDashboardAlert from '../common/partial/CommonDashboardAlert';
 import CommonDashboardUserCard from '../common/partial/CommonDashboardUserCard';
 import CommonDashboardMarketingTeam from '../common/partial/CommonDashboardMarketingTeam';
 import CommonDashboardDesignTeam from '../common/partial/CommonDashboardDesignTeam';
-import CommonDashboardIncome from '../common/partial/CommonDashboardIncome';
+import CommonDashboardGassUsage from '../common/partial/CommonDashboardGassUsage';
+import CommonDashboardGassUsagePredicted from '../common/partial/CommonDashboardGassUsagePredicted';
 import CommonDashboardRecentActivities from '../common/partial/CommonDashboardRecentActivities';
 import CommonDashboardUserIssue from '../common/partial/CommonDashboardUserIssue';
 import CommonDashboardSalesByStore from '../common/partial/CommonDashboardSalesByStore';
@@ -75,50 +76,53 @@ const Index: NextPage = () => {
 					</ButtonGroup>
 				</SubHeaderLeft>
 				<SubHeaderRight>
-					<CommonAvatarTeam>
+					{/* <CommonAvatarTeam>
 						<strong>Marketing</strong> Team
-					</CommonAvatarTeam>
+					</CommonAvatarTeam> */}
 				</SubHeaderRight>
 			</SubHeader>
 			<Page container='fluid'>
 				<div className='row'>
-					<div className='col-12'>
-						<CommonDashboardAlert />
-					</div>
-
-					<div className='col-xl-4'>
-						<CommonDashboardUserCard />
-					</div>
-					<div className='col-xl-4'>
-						<CommonDashboardMarketingTeam />
-					</div>
-					<div className='col-xl-4'>
-						<CommonDashboardDesignTeam />
-					</div>
-
-					<div className='col-xxl-6'>
-						<CommonDashboardIncome activeTab={activeTab} />
-					</div>
-					<div className='col-xxl-3'>
-						<CommonDashboardRecentActivities />
-					</div>
-					<div className='col-xxl-3'>
-						<CommonDashboardUserIssue />
-					</div>
-
-					<div className='col-xxl-8'>
-						<CommonDashboardSalesByStore />
-					</div>
-					<div className='col-xxl-4 col-xl-6'>
-						<CommonDashboardWaitingAnswer />
-					</div>
-
-					<div className='col-xxl-4 col-xl-6'>
+					<div>
 						<CommonMyWallet />
 					</div>
-					<div className='col-xxl-8'>
-						<CommonDashboardTopSeller />
+					{/* <div className='col-12'>
+						<CommonDashboardAlert />
+					</div> */}
+
+					{/* <div className='col-xl-4'>
+						<CommonDashboardUserCard />
+					</div> */}
+					{/* <div className='col-xl-4'>
+						<CommonDashboardMarketingTeam />
+					</div> */}
+					{/* <div className='col-xl-4'>
+						<CommonDashboardDesignTeam />
+					</div> */}
+
+					<div className='col-xxl-6'>
+						<CommonDashboardGassUsage activeTab={activeTab} />
 					</div>
+					<div className='col-xxl-6'>
+						<CommonDashboardGassUsagePredicted activeTab={activeTab} />
+					</div>
+					{/* <div className='col-xxl-3'>
+						<CommonDashboardRecentActivities />
+					</div> */}
+					{/* <div className='col-xxl-3'>
+						<CommonDashboardUserIssue />
+					</div> */}
+
+					<div>
+						<CommonDashboardSalesByStore />
+					</div>
+					{/* <div className='col-xxl-4 col-xl-6'>
+						<CommonDashboardWaitingAnswer />
+					</div> */}
+
+					{/* <div className='col-xxl-8'>
+						<CommonDashboardTopSeller />
+					</div> */}
 				</div>
 			</Page>
 		</PageWrapper>

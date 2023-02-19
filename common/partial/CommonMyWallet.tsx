@@ -129,7 +129,7 @@ const CommonMyWallet = () => {
 				</CardHeader>
 				<CardBody>
 					<div className='row g-3'>
-						<div className='col-12'>
+						{/* <div className='col-12'>
 							{selectedCard && (
 								<ReactCreditCardsContainer
 									issuer={Payment.fns.cardType(selectedCard.number)}>
@@ -143,7 +143,7 @@ const CommonMyWallet = () => {
 									/>
 								</ReactCreditCardsContainer>
 							)}
-						</div>
+						</div> */}
 						<div className='col-12'>
 							<div
 								className={classNames('rounded-3', {
