@@ -8,10 +8,52 @@ import USERS from '../../../common/data/userDummyData';
 import Avatar from '../../../components/Avatar';
 import showNotification from '../../../components/extras/showNotification';
 import CHATS from '../../../common/data/chatDummyData';
+import { useAccount, useConnect, useDisconnect, useSignMessage } from 'wagmi';
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
+import { useAuthRequestChallengeEvm } from '@moralisweb3/next';
+import { useRouter } from 'next/router';
+import { signIn } from 'next-auth/react';
 
 const CommonHeaderChat = () => {
 	const [state, setState] = useState<boolean>(false);
 	const [msgCount, setMsgCount] = useState<number>(0);
+
+	const { connectAsync } = useConnect();
+	const { disconnectAsync } = useDisconnect();
+	const { isConnected, address } = useAccount();
+	const { signMessageAsync } = useSignMessage();
+	const { requestChallengeAsync } = useAuthRequestChallengeEvm();
+	const { push } = useRouter();
+
+	const handleAuth = async () => {
+		if (isConnected) {
+			await disconnectAsync();
+		}
+
+		const { account, chain } = await connectAsync({
+			connector: new MetaMaskConnector(),
+		});
+
+		const { message } = await requestChallengeAsync({
+			address: account,
+			chainId: chain.id,
+		});
+
+		const signature = await signMessageAsync({ message });
+
+		// redirect user after success authentication to '/user' page
+		const { url } = await signIn('moralis-auth', {
+			message,
+			signature,
+			redirect: false,
+			callbackUrl: '/',
+		});
+		/**
+		 * instead of using signIn(..., redirect: "/user")
+		 * we get the url from callback and push it to the router to avoid page refreshing
+		 */
+		push(url);
+	};
 
 	useEffect(() => {
 		const timeout = setTimeout(() => {
@@ -41,16 +83,17 @@ const CommonHeaderChat = () => {
 		setMsgCount(0);
 	}, [state]);
 
-	const connected = true;
-	const addr = '0x35eb...ced20';
-
 	return (
 		<>
 			<div className='col d-flex align-items-center cursor-pointer'>
-				{connected ? (
-					<button className='btn btn-lg btn-success'>{addr}</button>
+
+				{isConnected ? (
+					<button className='btn btn-lg btn-dark'>{address}</button>
+
 				) : (
-					<button className='btn btn-lg btn-dark'>Connect</button>
+					<button className='btn btn-lg btn-dark' onClick={handleAuth}>
+						Connect
+					</button>
 				)}
 			</div>
 			{/* <div
