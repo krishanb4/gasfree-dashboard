@@ -48,7 +48,7 @@ const CommonHeaderChat = () => {
 		<>
 			<div className='col d-flex align-items-center cursor-pointer'>
 				{connected ? (
-					<button className='btn btn-lg btn-dark'>{addr}</button>
+					<button className='btn btn-lg btn-success'>{addr}</button>
 				) : (
 					<button className='btn btn-lg btn-dark'>Connect</button>
 				)}

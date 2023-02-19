@@ -25,7 +25,7 @@ import { TABS, TTabs } from '../type/helper';
 interface ICommonDashboardIncomeProps {
 	activeTab: TTabs;
 }
-const CommonDashboardIncome: FC<ICommonDashboardIncomeProps> = ({ activeTab }) => {
+const CommonDashboardGassUsage: FC<ICommonDashboardIncomeProps> = ({ activeTab }) => {
 	const { darkModeStatus } = useDarkMode();
 
 	const [isPending, startTransition] = useTransition();
@@ -166,7 +166,7 @@ const CommonDashboardIncome: FC<ICommonDashboardIncomeProps> = ({ activeTab }) =
 			<CardHeader>
 				<CardLabel icon='PointOfSale' iconColor='success'>
 					<CardTitle tag='h4' className='h5'>
-						Income
+						Your Gass Usage
 					</CardTitle>
 					<CardSubTitle>{activeTab}</CardSubTitle>
 				</CardLabel>
@@ -331,4 +331,4 @@ const CommonDashboardIncome: FC<ICommonDashboardIncomeProps> = ({ activeTab }) =
 	);
 };
 
-export default CommonDashboardIncome;
+export default CommonDashboardGassUsage;
