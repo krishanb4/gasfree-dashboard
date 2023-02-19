@@ -41,9 +41,19 @@ const CommonHeaderChat = () => {
 		setMsgCount(0);
 	}, [state]);
 
+	const connected = true;
+	const addr = '0x35eb...ced20';
+
 	return (
 		<>
-			<div
+			<div className='col d-flex align-items-center cursor-pointer'>
+				{connected ? (
+					<button className='btn btn-lg btn-dark'>{addr}</button>
+				) : (
+					<button className='btn btn-lg btn-dark'>Connect</button>
+				)}
+			</div>
+			{/* <div
 				className='col d-flex align-items-center cursor-pointer'
 				onClick={() => setState(!state)}
 				role='presentation'>
@@ -68,8 +78,8 @@ const CommonHeaderChat = () => {
 						<span className='visually-hidden'>Online user</span>
 					</span>
 				</div>
-			</div>
-			<OffCanvas
+			</div> */}
+			{/* <OffCanvas
 				id='chat'
 				isOpen={state}
 				setOpen={setState}
@@ -100,7 +110,7 @@ const CommonHeaderChat = () => {
 						</Button>
 					</InputGroup>
 				</div>
-			</OffCanvas>
+			</OffCanvas> */}
 		</>
 	);
 };

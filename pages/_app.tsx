@@ -15,6 +15,10 @@ import { ReactNotifications } from 'react-notifications-component';
 import Wrapper from '../layout/Wrapper/Wrapper';
 import { appWithTranslation } from 'next-i18next';
 import App from '../layout/App/App';
+import { Web3Modal } from '@web3modal/react';
+import { ethereumClient, wagmiClient } from '../hooks/useWalletConnectNew';
+import { WagmiConfig } from 'wagmi';
+
 import AsideRoutes from '../layout/Aside/AsideRoutes';
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
@@ -40,6 +44,16 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 		<AuthContextProvider>
 			<ThemeContextProvider>
 				<ThemeProvider theme={theme}>
+					<WagmiConfig client={wagmiClient}>
+						{/* <SettingsButton /> */}
+						{/* <SettingsDrawer />
+						<ModalsContainer />
+						<DrawersContainer /> */}
+					</WagmiConfig>
+					<Web3Modal
+						projectId={process.env.NEXT_PUBLIC_PROJECT_ID}
+						ethereumClient={ethereumClient}
+					/>
 					<ToastProvider components={{ ToastContainer, Toast }}>
 						<TourProvider
 							steps={steps}

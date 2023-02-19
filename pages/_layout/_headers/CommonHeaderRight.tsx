@@ -121,7 +121,7 @@ const CommonHeaderRight: FC<ICommonHeaderRightProps> = ({ beforeChildren, afterC
 				</div>
 
 				{/* Lang Selector */}
-				<div className='col-auto'>
+				{/* <div className='col-auto'>
 					<Dropdown>
 						<DropdownToggle hasIcon={false}>
 							{typeof getLangWithKey(router.locale as ILang['key']['lng'])?.icon ===
@@ -158,7 +158,7 @@ const CommonHeaderRight: FC<ICommonHeaderRightProps> = ({ beforeChildren, afterC
 							))}
 						</DropdownMenu>
 					</Dropdown>
-				</div>
+				</div> */}
 
 				{/* Quick Panel */}
 				<div className='col-auto'>
