@@ -15,11 +15,20 @@ import { ReactNotifications } from 'react-notifications-component';
 import Wrapper from '../layout/Wrapper/Wrapper';
 import { appWithTranslation } from 'next-i18next';
 import App from '../layout/App/App';
-import { Web3Modal } from '@web3modal/react';
-import { ethereumClient, wagmiClient } from '../hooks/useWalletConnectNew';
-import { WagmiConfig } from 'wagmi';
+import { createClient, configureChains, WagmiConfig } from 'wagmi';
+import { publicProvider } from 'wagmi/providers/public';
+import { SessionProvider } from 'next-auth/react';
+import { mainnet } from 'wagmi/chains';
 
 import AsideRoutes from '../layout/Aside/AsideRoutes';
+
+const { provider, webSocketProvider } = configureChains([mainnet], [publicProvider()]);
+
+const client = createClient({
+	provider,
+	webSocketProvider,
+	autoConnect: true,
+});
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
 	getOS();
@@ -44,34 +53,28 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 		<AuthContextProvider>
 			<ThemeContextProvider>
 				<ThemeProvider theme={theme}>
-					<WagmiConfig client={wagmiClient}>
-						{/* <SettingsButton /> */}
-						{/* <SettingsDrawer />
-						<ModalsContainer />
-						<DrawersContainer /> */}
+					<WagmiConfig client={client}>
+						<SessionProvider session={pageProps.session} refetchInterval={0}>
+							<ToastProvider components={{ ToastContainer, Toast }}>
+								<TourProvider
+									steps={steps}
+									styles={styles}
+									showNavigation={false}
+									showBadge={false}>
+									<App>
+										<AsideRoutes />
+										<Wrapper>
+											{/* eslint-disable-next-line react/jsx-props-no-spreading */}
+											<Component {...pageProps} />
+										</Wrapper>
+									</App>
+									<Portal id='portal-notification'>
+										<ReactNotifications />
+									</Portal>
+								</TourProvider>
+							</ToastProvider>
+						</SessionProvider>
 					</WagmiConfig>
-					<Web3Modal
-						projectId={process.env.NEXT_PUBLIC_PROJECT_ID}
-						ethereumClient={ethereumClient}
-					/>
-					<ToastProvider components={{ ToastContainer, Toast }}>
-						<TourProvider
-							steps={steps}
-							styles={styles}
-							showNavigation={false}
-							showBadge={false}>
-							<App>
-								<AsideRoutes />
-								<Wrapper>
-									{/* eslint-disable-next-line react/jsx-props-no-spreading */}
-									<Component {...pageProps} />
-								</Wrapper>
-							</App>
-							<Portal id='portal-notification'>
-								<ReactNotifications />
-							</Portal>
-						</TourProvider>
-					</ToastProvider>
 				</ThemeProvider>
 			</ThemeContextProvider>
 		</AuthContextProvider>
