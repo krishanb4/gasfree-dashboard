@@ -18,17 +18,28 @@ import App from '../layout/App/App';
 import { createClient, configureChains, WagmiConfig } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 import { SessionProvider } from 'next-auth/react';
-import { mainnet } from 'wagmi/chains';
+import { mainnet, bsc } from 'wagmi/chains';
+import { EthereumClient, modalConnectors, walletConnectProvider } from '@web3modal/ethereum';
+import { Web3Modal } from '@web3modal/react';
 
 import AsideRoutes from '../layout/Aside/AsideRoutes';
+const chains = [bsc];
 
-const { provider, webSocketProvider } = configureChains([mainnet], [publicProvider()]);
+const { provider } = configureChains(chains, [
+	walletConnectProvider({ projectId: process.env.NEXT_PUBLIC_PROJECT_ID! }),
+]);
 
 const client = createClient({
 	provider,
-	webSocketProvider,
 	autoConnect: true,
+	connectors: modalConnectors({
+		projectId: process.env.NEXT_PUBLIC_PROJECT_ID!,
+		version: '1', // or "2"
+		appName: 'gasfree',
+		chains,
+	}),
 });
+const ethereumClient = new EthereumClient(client, chains);
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
 	getOS();
@@ -75,6 +86,13 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 							</ToastProvider>
 						</SessionProvider>
 					</WagmiConfig>
+					<Web3Modal
+						projectId={process.env.NEXT_PUBLIC_PROJECT_ID!}
+						ethereumClient={ethereumClient}
+						enableAccountView
+						defaultChain={bsc}
+						enableNetworkView
+					/>
 				</ThemeProvider>
 			</ThemeContextProvider>
 		</AuthContextProvider>

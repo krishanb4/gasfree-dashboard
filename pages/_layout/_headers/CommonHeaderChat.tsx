@@ -8,53 +8,62 @@ import USERS from '../../../common/data/userDummyData';
 import Avatar from '../../../components/Avatar';
 import showNotification from '../../../components/extras/showNotification';
 import CHATS from '../../../common/data/chatDummyData';
-import { useAccount, useConnect, useDisconnect, useSignMessage } from 'wagmi';
+import { useAccount, useConnect, useDisconnect, useNetwork, useSignMessage } from 'wagmi';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 import { useAuthRequestChallengeEvm } from '@moralisweb3/next';
 import { useRouter } from 'next/router';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
+import { Web3Button } from '@web3modal/react';
+
+interface AuthState {
+	connecting: boolean;
+	connected: boolean;
+}
 
 const CommonHeaderChat = () => {
 	const [state, setState] = useState<boolean>(false);
 	const [msgCount, setMsgCount] = useState<number>(0);
-
-	const { connectAsync } = useConnect();
-	const { disconnectAsync } = useDisconnect();
-	const { isConnected, address } = useAccount();
+	const { isConnected, address, isConnecting, isDisconnected } = useAccount();
+	const [authState, setAuthState] = useState<AuthState>({
+		connecting: isConnecting,
+		connected: isConnected,
+	});
+	const { chain } = useNetwork();
 	const { signMessageAsync } = useSignMessage();
 	const { requestChallengeAsync } = useAuthRequestChallengeEvm();
 	const { push } = useRouter();
+	console.log(isConnected);
+	useEffect(() => {
+		console.log();
+		handleAuth();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isConnecting, isConnected]);
 
 	const handleAuth = async () => {
-		if (isConnected) {
-			await disconnectAsync();
+		if (authState.connecting && isConnected) {
+			const challenge = await requestChallengeAsync({
+				address: address!,
+				chainId: chain!.id,
+			});
+
+			const message = challenge?.message || '';
+
+			const signature = await signMessageAsync({ message });
+
+			// redirect user after success authentication to '/user' page
+			const response = await signIn('moralis-auth', {
+				message,
+				signature,
+				redirect: false,
+				callbackUrl: '/',
+			});
+			/**
+			 * instead of using signIn(..., redirect: "/user")
+			 * we get the url from callback and push it to the router to avoid page refreshing
+			 */
+			push(response?.url || '/');
 		}
-
-		const { account, chain } = await connectAsync({
-			connector: new MetaMaskConnector(),
-		});
-
-		const challenge = await requestChallengeAsync({
-			address: account,
-			chainId: chain.id,
-		});
-
-		const message = challenge?.message || '';
-
-		const signature = await signMessageAsync({ message });
-
-		// redirect user after success authentication to '/user' page
-		const response = await signIn('moralis-auth', {
-			message,
-			signature,
-			redirect: false,
-			callbackUrl: '/',
-		});
-		/**
-		 * instead of using signIn(..., redirect: "/user")
-		 * we get the url from callback and push it to the router to avoid page refreshing
-		 */
-		push(response?.url || '/');
 	};
 
 	useEffect(() => {
@@ -88,13 +97,7 @@ const CommonHeaderChat = () => {
 	return (
 		<>
 			<div className='col d-flex align-items-center cursor-pointer'>
-				{isConnected ? (
-					<button className='btn btn-lg btn-dark'>{address}</button>
-				) : (
-					<button className='btn btn-lg btn-dark' onClick={handleAuth}>
-						Connect
-					</button>
-				)}
+				<Web3Button balance='show' icon='hide' />
 			</div>
 			{/* <div
 				className='col d-flex align-items-center cursor-pointer'
