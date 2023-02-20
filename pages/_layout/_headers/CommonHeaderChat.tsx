@@ -25,6 +25,11 @@ const CommonHeaderChat = () => {
 	const { requestChallengeAsync } = useAuthRequestChallengeEvm();
 	const { push } = useRouter();
 
+	const addr_short_bgn = address?.slice(0, 5);
+	const addr_shor_lst = address?.slice(-5, -1);
+
+	const short_address = addr_short_bgn + '...' + addr_shor_lst;
+
 	const handleAuth = async () => {
 		if (isConnected) {
 			await disconnectAsync();
@@ -89,7 +94,7 @@ const CommonHeaderChat = () => {
 		<>
 			<div className='col d-flex align-items-center cursor-pointer'>
 				{isConnected ? (
-					<button className='btn btn-lg btn-dark'>{address}</button>
+					<button className='btn btn-lg btn-success'>{short_address}</button>
 				) : (
 					<button className='btn btn-lg btn-dark' onClick={handleAuth}>
 						Connect

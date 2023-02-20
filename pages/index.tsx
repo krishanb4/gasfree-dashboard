@@ -29,6 +29,7 @@ import CommonDashboardSalesByStore from '../common/partial/CommonDashboardSalesB
 import CommonDashboardWaitingAnswer from '../common/partial/CommonDashboardWaitingAnswer';
 import CommonDashboardTopSeller from '../common/partial/CommonDashboardTopSeller';
 import CommonMyWallet from '../common/partial/CommonMyWallet';
+import CommonMyStat from '../common/partial/CommonMyStat';
 
 const Index: NextPage = () => {
 	const { mobileDesign } = useContext(ThemeContext);
@@ -83,8 +84,11 @@ const Index: NextPage = () => {
 			</SubHeader>
 			<Page container='fluid'>
 				<div className='row'>
-					<div>
+					<div className='col-xxl-6'>
 						<CommonMyWallet />
+					</div>
+					<div className='col-xxl-6'>
+						<CommonMyStat />
 					</div>
 					{/* <div className='col-12'>
 						<CommonDashboardAlert />
