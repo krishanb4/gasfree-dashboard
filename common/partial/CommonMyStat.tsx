@@ -64,7 +64,7 @@ const validate = (values: {
 	return errors;
 };
 
-const CommonMyWallet = () => {
+const CommonMyStat = () => {
 	const { darkModeStatus } = useDarkMode();
 
 	const [cardList, setCardList] = useState<
@@ -116,7 +116,7 @@ const CommonMyWallet = () => {
 			<Card stretch>
 				<CardHeader>
 					<CardLabel icon='Style' iconColor='info'>
-						<CardTitle>My Wallet</CardTitle>
+						<CardTitle>My Stats</CardTitle>
 					</CardLabel>
 					<CardActions>
 						<Button
@@ -414,4 +414,4 @@ const CommonMyWallet = () => {
 	);
 };
 
-export default CommonMyWallet;
+export default CommonMyStat;
