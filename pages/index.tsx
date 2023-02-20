@@ -76,11 +76,11 @@ const Index: NextPage = () => {
 						))}
 					</ButtonGroup>
 				</SubHeaderLeft>
-				<SubHeaderRight>
-					{/* <CommonAvatarTeam>
+				{/* <SubHeaderRight>
+					<CommonAvatarTeam>
 						<strong>Marketing</strong> Team
-					</CommonAvatarTeam> */}
-				</SubHeaderRight>
+					</CommonAvatarTeam>
+				</SubHeaderRight> */}
 			</SubHeader>
 			<Page container='fluid'>
 				<div className='row'>
