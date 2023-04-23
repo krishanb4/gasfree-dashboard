@@ -17,6 +17,7 @@ import Input from '../../components/bootstrap/forms/Input';
 import ReactCreditCardsContainer from '../../components/extras/ReactCreditCardsContainer';
 import useDarkMode from '../../hooks/useDarkMode';
 import Icon from '../../components/icon/Icon';
+import { useAccount, useConnect, useDisconnect, useEnsAvatar, useEnsName } from 'wagmi';
 
 const validate = (values: {
 	name: string;
@@ -110,7 +111,7 @@ const CommonMyWallet = () => {
 	});
 	const [focused, setFocused] = useState<Focused>('number');
 	const handleInputFocus = ({ target }: { target: { name: Focused } }) => setFocused(target.name);
-
+	const { address, connector, isConnected } = useAccount();
 	return (
 		<>
 			<Card stretch>
@@ -129,6 +130,7 @@ const CommonMyWallet = () => {
 					</CardActions>
 				</CardHeader>
 				<CardBody>
+					<div>{address}</div>
 					<div className='row g-3'>
 						<div className='row g-4 align-items-center'>
 							<div className='col-xl-6'>
@@ -142,8 +144,8 @@ const CommonMyWallet = () => {
 											className={classNames(
 												'd-flex align-items-center rounded-2 p-3',
 												{
-													'bg-l10-warning': !darkModeStatus,
-													'bg-lo25-warning': darkModeStatus,
+													'bg-l10-primary': !darkModeStatus,
+													'bg-lo25-primary': darkModeStatus,
 												},
 											)}>
 											<div className='flex-shrink-0'>
@@ -155,7 +157,7 @@ const CommonMyWallet = () => {
 											</div>
 											<div className='flex-grow-1 ms-3'>
 												<div className='fw-bold fs-3 mb-0'>183K</div>
-												<div className='text-muted mt-n2'>Sales</div>
+												<div className='text-muted mt-n2'>ETH Balance</div>
 											</div>
 										</div>
 									</div>
@@ -172,8 +174,8 @@ const CommonMyWallet = () => {
 											className={classNames(
 												'd-flex align-items-center rounded-2 p-3',
 												{
-													'bg-l10-warning': !darkModeStatus,
-													'bg-lo25-warning': darkModeStatus,
+													'bg-l10-secondary': !darkModeStatus,
+													'bg-lo25-secondary': darkModeStatus,
 												},
 											)}>
 											<div className='flex-shrink-0'>
@@ -185,13 +187,13 @@ const CommonMyWallet = () => {
 											</div>
 											<div className='flex-grow-1 ms-3'>
 												<div className='fw-bold fs-3 mb-0'>183K</div>
-												<div className='text-muted mt-n2'>Sales</div>
+												<div className='text-muted mt-n2'>Gas balance</div>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-							<div className='col-xl-6'>
+							{/* <div className='col-xl-6'>
 								<div
 									className={classNames('rounded-3', {
 										'bg-l10-dark': !darkModeStatus,
@@ -202,8 +204,8 @@ const CommonMyWallet = () => {
 											className={classNames(
 												'd-flex align-items-center rounded-2 p-3',
 												{
-													'bg-l10-warning': !darkModeStatus,
-													'bg-lo25-warning': darkModeStatus,
+													'bg-l10-success': !darkModeStatus,
+													'bg-lo25-success': darkModeStatus,
 												},
 											)}>
 											<div className='flex-shrink-0'>
@@ -215,13 +217,13 @@ const CommonMyWallet = () => {
 											</div>
 											<div className='flex-grow-1 ms-3'>
 												<div className='fw-bold fs-3 mb-0'>183K</div>
-												<div className='text-muted mt-n2'>Sales</div>
+												<div className='text-muted mt-n2'>Earned</div>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-							<div className='col-xl-6'>
+							</div> */}
+							{/* <div className='col-xl-6'>
 								<div
 									className={classNames('rounded-3', {
 										'bg-l10-dark': !darkModeStatus,
@@ -232,8 +234,8 @@ const CommonMyWallet = () => {
 											className={classNames(
 												'd-flex align-items-center rounded-2 p-3',
 												{
-													'bg-l10-warning': !darkModeStatus,
-													'bg-lo25-warning': darkModeStatus,
+													'bg-l10-brand': !darkModeStatus,
+													'bg-lo25-brand': darkModeStatus,
 												},
 											)}>
 											<div className='flex-shrink-0'>
@@ -245,12 +247,14 @@ const CommonMyWallet = () => {
 											</div>
 											<div className='flex-grow-1 ms-3'>
 												<div className='fw-bold fs-3 mb-0'>183K</div>
-												<div className='text-muted mt-n2'>Sales</div>
+												<div className='text-muted mt-n2'>
+													Free Transactions
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
+							</div> */}
 						</div>
 					</div>
 				</CardBody>

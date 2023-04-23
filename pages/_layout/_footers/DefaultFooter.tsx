@@ -20,7 +20,7 @@ const DefaultFooter = () => {
 								'link-dark': !darkModeStatus,
 								'link-light': darkModeStatus,
 							})}>
-							<small className='fw-bold'>GassFreeAI.</small>
+							<small className='fw-bold'>ChainlyzeAI.</small>
 						</a>
 					</div>
 				</div>

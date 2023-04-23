@@ -20,7 +20,7 @@ import { publicProvider } from 'wagmi/providers/public';
 import { SessionProvider } from 'next-auth/react';
 import { mainnet, bsc } from 'wagmi/chains';
 import { EthereumClient, modalConnectors, walletConnectProvider } from '@web3modal/ethereum';
-import { Web3Modal } from '@web3modal/react';
+import { Web3Modal, useWeb3ModalTheme } from '@web3modal/react';
 
 import AsideRoutes from '../layout/Aside/AsideRoutes';
 const chains = [bsc];
@@ -44,11 +44,13 @@ const ethereumClient = new EthereumClient(client, chains);
 const MyApp = ({ Component, pageProps }: AppProps) => {
 	getOS();
 
+	const { theme, setTheme } = useWeb3ModalTheme();
+
 	/**
 	 * Dark Mode
 	 */
 	const { themeStatus } = useDarkMode();
-	const theme = {
+	const themecustom = {
 		theme: themeStatus,
 		primary: COLORS.PRIMARY.code,
 		secondary: COLORS.SECONDARY.code,
@@ -63,7 +65,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 	return (
 		<AuthContextProvider>
 			<ThemeContextProvider>
-				<ThemeProvider theme={theme}>
+				<ThemeProvider theme={themecustom}>
 					<WagmiConfig client={client}>
 						<SessionProvider session={pageProps.session} refetchInterval={0}>
 							<ToastProvider components={{ ToastContainer, Toast }}>

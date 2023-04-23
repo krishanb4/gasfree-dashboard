@@ -30,7 +30,9 @@ import CommonDashboardWaitingAnswer from '../common/partial/CommonDashboardWaiti
 import CommonDashboardTopSeller from '../common/partial/CommonDashboardTopSeller';
 import CommonMyWallet from '../common/partial/CommonMyWallet';
 import CommonMyStat from '../common/partial/CommonMyStat';
-
+import MyTokenList from '../common/partial/MyTokenList';
+import ChainButtons from './components/chainbuttons/ChainButtons';
+import Sparkline from '../components/charts/Sparkline';
 const Index: NextPage = () => {
 	const { mobileDesign } = useContext(ThemeContext);
 	/**
@@ -61,7 +63,7 @@ const Index: NextPage = () => {
 			<Head>
 				<title>{demoPagesMenu.sales.subMenu.dashboard.text}</title>
 			</Head>
-			<SubHeader>
+			{/* <SubHeader>
 				<SubHeaderLeft>
 					<span className='h4 mb-0 fw-bold'>Overview</span>
 					<SubheaderSeparator />
@@ -76,19 +78,29 @@ const Index: NextPage = () => {
 						))}
 					</ButtonGroup>
 				</SubHeaderLeft>
-				{/* <SubHeaderRight>
+				 <SubHeaderRight>
 					<CommonAvatarTeam>
 						<strong>Marketing</strong> Team
 					</CommonAvatarTeam>
-				</SubHeaderRight> */}
-			</SubHeader>
+				</SubHeaderRight>
+			</SubHeader> */}
 			<Page container='fluid'>
 				<div className='row'>
-					<div className='col-xxl-6'>
-						<CommonMyWallet />
+					<div>
+						<ChainButtons />
 					</div>
-					<div className='col-xxl-6'>
+					<div>
+						<Sparkline />
+					</div>
+					<div>
 						<CommonMyStat />
+					</div>
+					{/* <div className='col-xxl-6'>
+						<CommonMyWallet />
+					</div> */}
+
+					<div>
+						<MyTokenList />
 					</div>
 					{/* <div className='col-12'>
 						<CommonDashboardAlert />
@@ -104,12 +116,12 @@ const Index: NextPage = () => {
 						<CommonDashboardDesignTeam />
 					</div> */}
 
-					<div className='col-xxl-6'>
+					{/* <div className='col-xxl-6'>
 						<CommonDashboardGassUsage activeTab={activeTab} />
 					</div>
 					<div className='col-xxl-6'>
 						<CommonDashboardGassUsagePredicted activeTab={activeTab} />
-					</div>
+					</div> */}
 					{/* <div className='col-xxl-3'>
 						<CommonDashboardRecentActivities />
 					</div> */}
@@ -117,9 +129,9 @@ const Index: NextPage = () => {
 						<CommonDashboardUserIssue />
 					</div> */}
 
-					<div>
+					{/* <div>
 						<CommonDashboardSalesByStore />
-					</div>
+					</div> */}
 					{/* <div className='col-xxl-4 col-xl-6'>
 						<CommonDashboardWaitingAnswer />
 					</div> */}

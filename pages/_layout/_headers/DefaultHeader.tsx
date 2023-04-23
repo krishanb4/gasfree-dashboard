@@ -4,6 +4,7 @@ import Navigation from '../../../layout/Navigation/Navigation';
 import { componentPagesMenu, pageLayoutTypesPagesMenu } from '../../../menu';
 import useDeviceScreen from '../../../hooks/useDeviceScreen';
 import CommonHeaderRight from './CommonHeaderRight';
+import CommonHeaderChat from './CommonHeaderChat';
 
 const DefaultHeader = () => {
 	const deviceScreen = useDeviceScreen();
@@ -11,7 +12,7 @@ const DefaultHeader = () => {
 		<Header>
 			<HeaderLeft>
 				<Navigation
-					menu={{ ...pageLayoutTypesPagesMenu, ...componentPagesMenu }}
+					menu={{ ...componentPagesMenu }}
 					id='header-top-menu'
 					horizontal={
 						!!deviceScreen?.width &&
@@ -19,7 +20,7 @@ const DefaultHeader = () => {
 					}
 				/>
 			</HeaderLeft>
-			<CommonHeaderRight />
+			<CommonHeaderRight afterChildren={<CommonHeaderChat />} />
 		</Header>
 	);
 };
