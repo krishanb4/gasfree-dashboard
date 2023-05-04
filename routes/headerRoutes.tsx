@@ -1,5 +1,10 @@
 import React from 'react';
-import { componentPagesMenu, dashboardPagesMenu, demoPagesMenu, pageLayoutTypesPagesMenu } from '../menu';
+import {
+	componentPagesMenu,
+	dashboardPagesMenu,
+	demoPagesMenu,
+	pageLayoutTypesPagesMenu,
+} from '../menu';
 import DashboardHeader from '../pages/_layout/_headers/DashboardHeader';
 import DashboardBookingHeader from '../pages/_layout/_headers/DashboardBookingHeader';
 import ProfilePageHeader from '../pages/_layout/_headers/ProfilePageHeader';
@@ -15,6 +20,9 @@ import UtilitiesHeader from '../pages/_layout/_headers/UtilitiesHeader';
 import IconHeader from '../pages/_layout/_headers/IconHeader';
 import DefaultHeader from '../pages/_layout/_headers/DefaultHeader';
 
+// vault header
+import VaultHeader from '../pages/_layout/_headers/VaultHeader';
+
 const headers = [
 	{ path: pageLayoutTypesPagesMenu.pageLayout.subMenu.onlySubheader.path, element: null },
 	{ path: pageLayoutTypesPagesMenu.pageLayout.subMenu.onlyContent.path, element: null },
@@ -24,6 +32,7 @@ const headers = [
 	{ path: demoPagesMenu.page404.path, element: null },
 	{ path: demoPagesMenu.knowledge.subMenu.grid.path, element: null },
 	{ path: dashboardPagesMenu.dashboard.path, element: <DashboardHeader /> },
+	// { path: dashboardPagesMenu.vaults.path, element: <VaultHeader /> },
 	{
 		path: demoPagesMenu.projectManagement.subMenu.list.path,
 		element: <DashboardHeader />,
@@ -32,6 +41,10 @@ const headers = [
 	{
 		path: dashboardPagesMenu.dashboardBooking.path,
 		element: <DashboardBookingHeader />,
+	},
+	{
+		path: dashboardPagesMenu.vaults.path,
+		element: <VaultHeader />,
 	},
 	{
 		path: demoPagesMenu.appointment.subMenu.calendar.path,
