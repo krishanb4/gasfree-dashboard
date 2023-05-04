@@ -95,9 +95,7 @@ async function getBalanceWithPriceCMC(token: token, chain: typeof EvmChain.ETHER
 			price = { usdPrice: data[0].price_usd || null };
 			usdPrice = data[0].price_usd || null;
 			console.log(usdPrice);
-		} catch (e) {
-			return null;
-		}
+		} catch (e) {}
 	}
 	return {
 		...token,
