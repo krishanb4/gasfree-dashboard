@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import moment from 'moment';
 import { FormikHelpers, useFormik } from 'formik';
@@ -27,19 +27,20 @@ import Input from '../../components/bootstrap/forms/Input';
 import Textarea from '../../components/bootstrap/forms/Textarea';
 import Checks from '../../components/bootstrap/forms/Checks';
 import Popovers from '../../components/bootstrap/Popovers';
-import data from '../data/dummyEventsData';
+import data from '../data/balanceData';
 import USERS from '../data/userDummyData';
 import EVENT_STATUS from '../data/enumEventStatus';
 import Avatar from '../../components/Avatar';
 import PaginationButtons, { dataPagination, PER_COUNT } from '../../components/PaginationButtons';
-import useSortableData from '../../hooks/useSortableData';
+import useSortableDataChains from '../../hooks/useSortableDataChains';
 import useDarkMode from '../../hooks/useDarkMode';
-
+import axios from 'axios';
 interface IMyTokenListProps {
 	isFluid?: boolean;
 }
 const MyTokenList: FC<IMyTokenListProps> = ({ isFluid }) => {
 	const { themeStatus, darkModeStatus } = useDarkMode();
+	const [tokenData, setTokenData] = useState([]);
 
 	// BEGIN :: Upcoming Events
 	const [upcomingEventsInfoOffcanvas, setUpcomingEventsInfoOffcanvas] = useState(false);
@@ -52,6 +53,16 @@ const MyTokenList: FC<IMyTokenListProps> = ({ isFluid }) => {
 		setUpcomingEventsEditOffcanvas(!upcomingEventsEditOffcanvas);
 	};
 	// END :: Upcoming Events
+
+	// useEffect(() => {
+	// 	async function fetchData() {
+	// 		const balances = await getBalances();
+
+	// 		setTokenData(balances);
+	// 		console.log(await getBalances());
+	// 	}
+	// 	fetchData();
+	// }, [tokenData]);
 
 	const formik = useFormik({
 		onSubmit<Values>(
@@ -74,7 +85,9 @@ const MyTokenList: FC<IMyTokenListProps> = ({ isFluid }) => {
 
 	const [currentPage, setCurrentPage] = useState(1);
 	const [perPage, setPerPage] = useState(PER_COUNT['25']);
-	const { items, requestSort, getClassNamesFor } = useSortableData(data);
+	const { items, requestSort, getClassNamesFor } = useSortableDataChains(data);
+
+	console.log(items);
 
 	return (
 		<>
@@ -115,59 +128,42 @@ const MyTokenList: FC<IMyTokenListProps> = ({ isFluid }) => {
 								<th>Price</th>
 								<th>Amount</th>
 								<th>USD Value</th>
-								<th>Decimal</th>
-								<th>Website</th>
-								<th>Rating</th>
 								<td />
 							</tr>
 						</thead>
 						<tbody>
 							{dataPagination(items, currentPage, perPage).map((item) => (
-								<tr key={item.id}>
-									{/* <td>
-										<Button
-											isOutline={!darkModeStatus}
-											color='dark'
-											isLight={darkModeStatus}
-											className={classNames({
-												'border-light': !darkModeStatus,
-											})}
-											icon='Info'
-											onClick={handleUpcomingDetails}
-											aria-label='Detailed information'
-										/>
-									</td> */}
-									{/* <td>
-										<div className='d-flex align-items-center'>
-											<span
-												className={classNames(
-													'badge',
-													'border border-2',
-													[`border-${themeStatus}`],
-													'rounded-circle',
-													'bg-success',
-													'p-2 me-2',
-													`bg-${item.status.color}`,
-												)}>
-												<span className='visually-hidden'>
-													{item.status.name}
-												</span>
-											</span>
-											<span className='text-nowrap'>
-												{moment(`${item.date} ${item.time}`).format(
-													'MMM Do YYYY, h:mm a',
-												)}
-											</span>
-										</div>
-									</td> */}
-									<td>
+								<React.Fragment key={item.chain}>
+									<tr>
+										<td
+											colSpan={4}
+											style={{
+												textAlign: 'center',
+												textTransform: 'uppercase',
+											}}
+											className='uppercase'>
+											{item.chain}
+										</td>
+									</tr>
+									{item.tokenBalances &&
+										item.tokenBalances.map((tokens: any) => (
+											<tr key={tokens.token_address}>
+												<td>{tokens.symbol}</td>
+												<td>{tokens?.usdPrice ? tokens?.usdPrice : '0'}</td>
+												<td>{tokens.balance}</td>
+												<td>
+													{tokens?.usdPrice
+														? tokens?.usdPrice * tokens.balance
+														: '0'}
+												</td>
+											</tr>
+										))}
+								</React.Fragment>
+							))}
+							{/* <td>
 										<div className='d-flex'>
 											<div className='flex-shrink-0'>
-												<Avatar
-													src={item.assigned.src}
-													color={item.assigned.color}
-													size={36}
-												/>
+												<Avatar src='' color='' size={36} />
 											</div>
 											<div className='flex-grow-1 ms-3 d-flex align-items-center text-nowrap'>
 												{`${item.assigned.name} ${item.assigned.surname}`}
@@ -211,23 +207,7 @@ const MyTokenList: FC<IMyTokenListProps> = ({ isFluid }) => {
 												))}
 											</DropdownMenu>
 										</Dropdown>
-									</td>
-									<td>5.0</td>
-									{/* <td>
-										<Button
-											isOutline={!darkModeStatus}
-											color='dark'
-											isLight={darkModeStatus}
-											className={classNames('text-nowrap', {
-												'border-light': !darkModeStatus,
-											})}
-											icon='Edit'
-											onClick={handleUpcomingEdit}>
-											Edit
-										</Button>
 									</td> */}
-								</tr>
-							))}
 						</tbody>
 					</table>
 				</CardBody>
@@ -259,7 +239,7 @@ const MyTokenList: FC<IMyTokenListProps> = ({ isFluid }) => {
 								isColForLabel
 								labelClassName='col-sm-2 text-capitalize'
 								childWrapperClassName='col-sm-10'>
-								<Input
+								{/* <Input
 									value={moment(
 										// @ts-ignore
 										`${data.find((e) => e.id === 1).date} ${
@@ -269,7 +249,7 @@ const MyTokenList: FC<IMyTokenListProps> = ({ isFluid }) => {
 									).format('MMM Do YYYY, h:mm a')}
 									readOnly
 									disabled
-								/>
+								/> */}
 							</FormGroup>
 						</div>
 						<div className='w-100' />
