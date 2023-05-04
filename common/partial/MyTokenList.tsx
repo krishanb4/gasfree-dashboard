@@ -35,6 +35,7 @@ import PaginationButtons, { dataPagination, PER_COUNT } from '../../components/P
 import useSortableDataChains from '../../hooks/useSortableDataChains';
 import useDarkMode from '../../hooks/useDarkMode';
 import axios from 'axios';
+import Empty from '../../assets/img/tokens/empty.png';
 interface IMyTokenListProps {
 	isFluid?: boolean;
 }
@@ -148,12 +149,27 @@ const MyTokenList: FC<IMyTokenListProps> = ({ isFluid }) => {
 									{item.tokenBalances &&
 										item.tokenBalances.map((tokens: any) => (
 											<tr key={tokens.token_address}>
-												<td>{tokens.symbol}</td>
+												<td>
+													<div className='d-flex'>
+														<div className='flex-shrink-0'>
+															<Avatar
+																src={
+																	tokens.logo
+																		? tokens.logo
+																		: Empty
+																}
+																size={36}
+															/>
+														</div>
+													</div>
+													{tokens.symbol}
+												</td>
 												<td>{tokens?.usdPrice ? tokens?.usdPrice : '0'}</td>
-												<td>{tokens.balance}</td>
+												<td>{tokens.balance / 10 ** tokens.decimals}</td>
 												<td>
 													{tokens?.usdPrice
-														? tokens?.usdPrice * tokens.balance
+														? tokens?.usdPrice *
+														  (tokens.balance / 10 ** tokens.decimals)
 														: '0'}
 												</td>
 											</tr>
