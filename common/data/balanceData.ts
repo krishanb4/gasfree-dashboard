@@ -31,7 +31,7 @@ interface ChainBalance {
     nftBalances: NftBalance[];
 }
 
-const url = 'http://localhost:3001/api/balances?address=0x35e66f648E34617966296CACD6eb3114b74b8b9e';
+const url = '/api/balances?address=0x35e66f648E34617966296CACD6eb3114b74b8b9e';
 async function getBalances() {
     try {
         const response = await axios.get(url);
