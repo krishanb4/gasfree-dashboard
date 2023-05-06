@@ -45,6 +45,13 @@ export const dashboardPagesMenu = {
 		icon: 'AccountBalance',
 		subMenu: null,
 	},
+	nft: {
+		id: 'nft',
+		text: 'Nfts',
+		path: 'nft',
+		icon: 'AccountBalance',
+		subMenu: null,
+	},
 	dashboardBooking: {
 		id: 'dashboard-booking',
 		text: 'Dashboard Booking',

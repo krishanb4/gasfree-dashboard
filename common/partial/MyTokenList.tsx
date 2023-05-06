@@ -114,48 +114,54 @@ const MyTokenList: FC<IMyTokenListProps> = ({ isFluid }) => {
 					<table className='table table-modern'>
 						<thead>
 							<tr>
-								{/* <td style={{ width: 60 }} /> */}
-								{/* <th
-									onClick={() => requestSort('date')}
-									className='cursor-pointer text-decoration-underline'>
-									Date / Time{' '}
-									<Icon
-										size='lg'
-										className={getClassNamesFor('date')}
-										icon='FilterList'
-									/>
-								</th> */}
 								<th>Token</th>
 								<th>Price</th>
 								<th>Amount</th>
 								<th>USD Value</th>
-								<td />
 							</tr>
 						</thead>
 						<tbody>
 							{dataPagination(items, currentPage, perPage).map((item) => (
 								<React.Fragment key={item.chain}>
 									<tr>
+										{}
 										<td
 											colSpan={4}
 											style={{
 												textAlign: 'center',
 												textTransform: 'uppercase',
+												backgroundColor: '#22a297',
+												fontWeight: 'bold',
 											}}
 											className='uppercase'>
 											{item.chain}
 										</td>
 									</tr>
+									<tr>
+										<td style={{ fontWeight: 'bold' }}>
+											<div className='d-flex'>
+												<div className='flex-shrink-0'>
+													<Avatar src={Empty} size={36} />
+												</div>
+											</div>
+											ETH
+										</td>
+										<td style={{ fontWeight: 'bold' }}>0</td>
+										<td style={{ fontWeight: 'bold' }}>
+											{(item.nativeBalance.balance / 10 ** 18).toFixed(6)}
+										</td>
+										<td style={{ fontWeight: 'bold' }}>0</td>
+									</tr>
 									{item.tokenBalances &&
 										item.tokenBalances.map((tokens: any) => (
 											<tr key={tokens.token_address}>
-												<td>
+												<td style={{ fontWeight: 'bold' }}>
 													<div className='d-flex'>
 														<div className='flex-shrink-0'>
 															<Avatar
 																src={
-																	tokens.logo
-																		? tokens.logo
+																	tokens.thumbnail
+																		? tokens.thumbnail
 																		: Empty
 																}
 																size={36}
@@ -164,12 +170,24 @@ const MyTokenList: FC<IMyTokenListProps> = ({ isFluid }) => {
 													</div>
 													{tokens.symbol}
 												</td>
-												<td>{tokens?.usdPrice ? tokens?.usdPrice : '0'}</td>
-												<td>{tokens.balance / 10 ** tokens.decimals}</td>
-												<td>
+												<td style={{ fontWeight: 'bold' }}>
 													{tokens?.usdPrice
-														? tokens?.usdPrice *
-														  (tokens.balance / 10 ** tokens.decimals)
+														? (tokens?.usdPrice).toFixed(6)
+														: '0'}
+												</td>
+												<td style={{ fontWeight: 'bold' }}>
+													{(
+														tokens.balance /
+														10 ** tokens.decimals
+													).toFixed(6)}
+												</td>
+												<td style={{ fontWeight: 'bold' }}>
+													{tokens?.usdPrice
+														? (
+																tokens?.usdPrice *
+																(tokens.balance /
+																	10 ** tokens.decimals)
+														  ).toFixed(6)
 														: '0'}
 												</td>
 											</tr>
