@@ -164,7 +164,7 @@ const CommonDashboardGassUsage: FC<ICommonDashboardIncomeProps> = ({ activeTab }
 	return (
 		<Card stretch>
 			<CardHeader>
-				<CardLabel icon='PointOfSale' iconColor='success'>
+				<CardLabel icon='EvStation' iconColor='success'>
 					<CardTitle tag='h4' className='h5'>
 						Your Gass Usage
 					</CardTitle>

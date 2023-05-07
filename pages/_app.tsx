@@ -18,12 +18,12 @@ import App from '../layout/App/App';
 import { createClient, configureChains, WagmiConfig } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 import { SessionProvider } from 'next-auth/react';
-import { mainnet, bsc } from 'wagmi/chains';
+import { mainnet, bsc, optimism, polygon, avalanche, fantom, arbitrum } from 'wagmi/chains';
 import { EthereumClient, modalConnectors, walletConnectProvider } from '@web3modal/ethereum';
-import { Web3Modal } from '@web3modal/react';
+import { Web3Modal, useWeb3ModalTheme } from '@web3modal/react';
 
 import AsideRoutes from '../layout/Aside/AsideRoutes';
-const chains = [bsc];
+const chains = [mainnet, bsc, optimism, polygon, avalanche, fantom, arbitrum];
 
 const { provider } = configureChains(chains, [
 	walletConnectProvider({ projectId: process.env.NEXT_PUBLIC_PROJECT_ID! }),
@@ -35,7 +35,7 @@ const client = createClient({
 	connectors: modalConnectors({
 		projectId: process.env.NEXT_PUBLIC_PROJECT_ID!,
 		version: '1', // or "2"
-		appName: 'gasfree',
+		appName: 'chainlyze',
 		chains,
 	}),
 });
@@ -44,11 +44,13 @@ const ethereumClient = new EthereumClient(client, chains);
 const MyApp = ({ Component, pageProps }: AppProps) => {
 	getOS();
 
+	const { theme, setTheme } = useWeb3ModalTheme();
+
 	/**
 	 * Dark Mode
 	 */
 	const { themeStatus } = useDarkMode();
-	const theme = {
+	const themecustom = {
 		theme: themeStatus,
 		primary: COLORS.PRIMARY.code,
 		secondary: COLORS.SECONDARY.code,
@@ -63,7 +65,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 	return (
 		<AuthContextProvider>
 			<ThemeContextProvider>
-				<ThemeProvider theme={theme}>
+				<ThemeProvider theme={themecustom}>
 					<WagmiConfig client={client}>
 						<SessionProvider session={pageProps.session} refetchInterval={0}>
 							<ToastProvider components={{ ToastContainer, Toast }}>

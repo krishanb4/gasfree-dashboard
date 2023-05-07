@@ -38,6 +38,20 @@ export const dashboardPagesMenu = {
 		icon: 'Dashboard',
 		subMenu: null,
 	},
+	vaults: {
+		id: 'vaults',
+		text: 'Vaults',
+		path: 'vaults',
+		icon: 'AccountBalance',
+		subMenu: null,
+	},
+	nft: {
+		id: 'nft',
+		text: 'Nfts',
+		path: 'nft',
+		icon: 'AccountBalance',
+		subMenu: null,
+	},
 	dashboardBooking: {
 		id: 'dashboard-booking',
 		text: 'Dashboard Booking',

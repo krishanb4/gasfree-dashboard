@@ -40,11 +40,6 @@ const CommonHeaderChat = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isConnecting, isConnected]);
 
-	const addr_short_bgn = address?.slice(0, 5);
-	const addr_shor_lst = address?.slice(-5, -1);
-
-	const short_address = addr_short_bgn + '...' + addr_shor_lst;
-
 	const handleAuth = async () => {
 		if (authState.connecting && isConnected) {
 			const challenge = await requestChallengeAsync({
