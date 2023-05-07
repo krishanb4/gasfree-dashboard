@@ -13,6 +13,7 @@ import { TColor } from '../../type/color-type';
 import { IDropdownProps } from './Dropdown';
 import { TIcons } from '../../type/icons-type';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface IButtonGroupProps extends HTMLAttributes<HTMLDivElement> {
 	children:
@@ -164,7 +165,7 @@ const Button = forwardRef<HTMLAnchorElement, IButtonProps>(
 				) : (
 					children
 				)} */}
-				{icon && <img src={icon} className='btn-icon' />}
+				{icon && <Image src={icon} className='btn-icon' alt='' />}
 				{isVisuallyHidden ? (
 					<span className='visually-hidden'>Toggle Dropdown</span>
 				) : (
