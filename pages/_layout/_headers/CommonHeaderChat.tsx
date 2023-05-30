@@ -33,9 +33,7 @@ const CommonHeaderChat = () => {
 	const { signMessageAsync } = useSignMessage();
 	const { requestChallengeAsync } = useAuthRequestChallengeEvm();
 	const { push } = useRouter();
-	console.log(isConnected);
 	useEffect(() => {
-		console.log();
 		handleAuth();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isConnecting, isConnected]);
